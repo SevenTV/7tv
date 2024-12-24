@@ -9,11 +9,20 @@
 	import { user } from "$/lib/auth";
 	import { UserEditorState } from "$/gql/graphql";
 	import ActiveEmoteSetButton from "$/components/users/active-emote-set-button.svelte";
+	import { t } from "svelte-i18n";
 
 	let { data }: { data: PageData } = $props();
 
 	let createEmoteSetDialog: DialogMode = $state("hidden");
 </script>
+
+<svelte:head>
+	<title>Emote Sets - {$t("page_titles.suffix")}</title>
+</svelte:head>
+
+<div class="header-container">
+	<h2>Emote Sets</h2>
+</div>
 
 <div class="buttons">
 	<CreateEmoteSetDialog ownerId={data.id} bind:mode={createEmoteSetDialog} />
@@ -49,6 +58,19 @@
 {/await}
 
 <style lang="scss">
+	.header-container {
+		display: flex;
+		justify-content: space-between;
+		height: 40px;
+		
+		h2 {
+			font-family: "AKONY";
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin: auto 0;
+		}
+	}
+
 	.buttons {
 		display: flex;
 		gap: 0.5rem;

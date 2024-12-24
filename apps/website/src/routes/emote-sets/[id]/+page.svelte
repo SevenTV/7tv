@@ -400,11 +400,12 @@
 			display: flex;
 			align-items: center;
 			gap: 0.75rem;
-
+			
 			font-size: 0.875rem;
 			font-weight: 500;
-
+			
 			progress {
+				height: 0.875rem;
 				flex-grow: 1;
 			}
 		}

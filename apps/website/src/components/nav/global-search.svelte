@@ -4,7 +4,7 @@
 	import { t } from "svelte-i18n";
 	import { gqlClient } from "$/lib/gql";
 	import { graphql } from "$/gql";
-	import type { SearchResultAll, User } from "$/gql/graphql";
+	import { SortBy, type SearchResultAll, type User } from "$/gql/graphql";
 	import Spinner from "../spinner.svelte";
 	import ResponsiveImage from "../responsive-image.svelte";
 	import ChannelPreview from "../channel-preview.svelte";
@@ -12,6 +12,7 @@
 	import Flags, { emoteToFlags } from "../flags.svelte";
 	import { defaultEmoteSet } from "$/lib/defaultEmoteSet";
 	import { editableEmoteSets } from "$/lib/emoteSets";
+	import { queryEmotes } from "$/lib/emoteQuery";
 
 	let query = $state("");
 
@@ -28,7 +29,7 @@
 
 			return {
 				users: { items: [...users.values()], totalCount: users.size, pageCount: 1 },
-				emotes: { items: [], totalCount: 0, pageCount: 0 },
+				emotes: await queryEmotes(null, [], SortBy.TopDaily, null, 1, 5),
 			};
 		}
 
@@ -222,6 +223,14 @@
 				<div class="results">
 					{#if results.emotes.items}
 						<span class="label">Emotes</span>
+					{/if}
+					{#if query.length !== 0}
+						<Button href="/emotes?q={query}" class="item">
+							{#snippet icon()}
+								<MagnifyingGlass />
+								{query}
+							{/snippet}
+						</Button>
 					{/if}
 					{#each results.emotes.items as result}
 						<Button href="/emotes/{result.id}" class="item">

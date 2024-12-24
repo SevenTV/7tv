@@ -130,7 +130,10 @@
 		justify-content: start;
 		align-items: center;
 		row-gap: 0.5rem;
-		margin: 1rem 0;
+
+		padding: 1rem;
+		background-color: var(--bg-medium);
+		border-radius: 0.5rem;
 
 		font-size: 0.75rem;
 		font-weight: 500;

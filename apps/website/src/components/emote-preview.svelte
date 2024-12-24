@@ -130,7 +130,7 @@
 		justify-content: center;
 
 		border: 1px solid transparent;
-		border-radius: 0.25rem;
+		border-radius: 0.5rem;
 		cursor: pointer;
 		user-select: none;
 

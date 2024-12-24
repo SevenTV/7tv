@@ -679,7 +679,6 @@
 	}
 
 	.scroll {
-		overflow: auto;
 		scrollbar-gutter: stable;
 	}
 

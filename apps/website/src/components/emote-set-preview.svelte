@@ -82,7 +82,7 @@
 
 		padding: 1rem;
 		border: 1px solid transparent;
-		border-radius: 0.25rem;
+		border-radius: 0.75rem;
 		cursor: pointer;
 
 		border-color: var(--highlight);
@@ -132,10 +132,10 @@
 			width: 100%;
 			height: 100%;
 
-			background-color: var(--bg-light);
+			background-color: var(--bg-dark);
 
 			&::-webkit-progress-bar {
-				background-color: var(--bg-light);
+				background-color: var(--bg-dark);
 			}
 
 			&::-moz-progress-bar {

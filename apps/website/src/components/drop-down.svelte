@@ -81,7 +81,7 @@
 		position: absolute;
 		top: 100%;
 		margin: 0;
-		margin-top: 0.25rem;
+		margin-top: 0.7rem;
 		padding: 0;
 		border: var(--border-active) 1px solid;
 		border-radius: 0.5rem;

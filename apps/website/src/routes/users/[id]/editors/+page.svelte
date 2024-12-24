@@ -4,6 +4,7 @@
 	import { UserEditorState } from "$/gql/graphql";
 	import { user } from "$/lib/auth";
 	import type { PageData } from "./$types";
+	import { t } from "svelte-i18n";
 
 	let { data }: { data: PageData } = $props();
 
@@ -23,6 +24,14 @@
 	);
 </script>
 
+<svelte:head>
+	<title>Editors - {$t("page_titles.suffix")}</title>
+</svelte:head>
+
+<div class="header-container">
+	<h2>Editors</h2>
+</div>
+
 {#await canManageEditors}
 	<Spinner />
 {:then canManageEditors}
@@ -38,6 +47,19 @@
 {/await}
 
 <style lang="scss">
+	.header-container {
+		display: flex;
+		justify-content: space-between;
+		height: 40px;
+		
+		h2 {
+			font-family: "AKONY";
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin: auto 0;
+		}
+	}
+
 	.width-wrapper {
 		margin-inline: auto;
 		width: 100%;

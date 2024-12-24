@@ -8,6 +8,7 @@
 	import { emotesLayout } from "$/lib/layout";
 	import { defaultEmoteSet } from "$/lib/defaultEmoteSet";
 	import ActiveEmoteSetButton from "$/components/users/active-emote-set-button.svelte";
+	import { t } from "svelte-i18n";
 
 	let { data }: { data: PageData } = $props();
 
@@ -166,6 +167,14 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Active Emotes - {$t("page_titles.suffix")}</title>
+</svelte:head>
+
+<div class="header-container">
+	<h2>Active Emotes</h2>
+</div>
+
 <div class="buttons">
 	<ActiveEmoteSetButton bind:userData={data.streamed.userRequest.value} />
 	<div class="layout-buttons">
@@ -177,6 +186,19 @@
 {/key}
 
 <style lang="scss">
+	.header-container {
+		display: flex;
+		justify-content: space-between;
+		height: 40px;
+		
+		h2 {
+			font-family: "AKONY";
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin: auto 0;
+		}
+	}
+
 	.buttons {
 		display: flex;
 		gap: 0.5rem;

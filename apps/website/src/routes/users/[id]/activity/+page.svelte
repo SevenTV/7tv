@@ -6,6 +6,7 @@
 	import UserEventComponent from "$/components/events/user-event.svelte";
 	import EmoteSetEventComponent from "$/components/events/emote-set-event.svelte";
 	import type { AnyEvent } from "$/gql/graphql";
+	import { t } from "svelte-i18n";
 
 	let { data }: { data: PageData } = $props();
 
@@ -292,35 +293,58 @@
 	let events = $derived(loadEvents(data.id, page));
 </script>
 
-<div class="events">
-	{#await events}
-		<div class="spinner-wrapper">
-			<Spinner />
-		</div>
-	{:then events}
-		{#each events as event, index}
-			{#if event.__typename === "UserEvent"}
-				<UserEventComponent {event} />
-			{:else if event.__typename === "EmoteSetEvent"}
-				<EmoteSetEventComponent {event} />
-			{/if}
-			{#if index !== events.length - 1}
-				<hr />
-			{/if}
-		{/each}
-	{/await}
+<svelte:head>
+	<title>Activity - {$t("page_titles.suffix")}</title>
+</svelte:head>
+
+<div class="layout">
+	<div class="header-container">
+		<h2>Activity</h2>
+	</div>
+	<div class="events">
+		{#await events}
+			<div class="spinner-wrapper">
+				<Spinner />
+			</div>
+		{:then events}
+			{#each events as event}
+				{#if event.__typename === "UserEvent"}
+					<UserEventComponent {event} />
+				{:else if event.__typename === "EmoteSetEvent"}
+					<EmoteSetEventComponent {event} />
+				{/if}
+			{/each}
+		{/await}
+	</div>
 </div>
 
 <style lang="scss">
+	.header-container {
+		display: flex;
+		justify-content: space-between;
+		height: 40px;
+		
+		h2 {
+			font-family: "AKONY";
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin: auto 0;
+		}
+	}
+
 	.spinner-wrapper {
 		text-align: center;
+	}
+
+	.layout {
+		overflow: auto;
+		scrollbar-gutter: stable;
 	}
 
 	.events {
 		display: flex;
 		flex-direction: column;
-
-		overflow: auto;
-		scrollbar-gutter: stable;
+		gap: 1rem;
+		margin-top: 0.75rem;
 	}
 </style>

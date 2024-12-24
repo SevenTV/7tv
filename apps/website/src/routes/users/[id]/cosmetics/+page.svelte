@@ -340,6 +340,9 @@
 				.map((p) => p.paint.id),
 		)}
 		<div class="layout">
+			<div class="header-container">
+				<h2>Cosmetics</h2>
+			</div>
 			<section>
 				<div class="header">
 					<h1>
@@ -475,6 +478,19 @@
 {/await}
 
 <style lang="scss">
+	.header-container {
+		display: flex;
+		justify-content: space-between;
+		height: 40px;
+		
+		h2 {
+			font-family: "AKONY";
+			font-size: 1.5rem;
+			font-weight: 700;
+			margin: auto 0;
+		}
+	}
+
 	.spinner-container {
 		display: flex;
 		justify-content: center;

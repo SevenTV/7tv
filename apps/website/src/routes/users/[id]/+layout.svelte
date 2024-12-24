@@ -78,20 +78,42 @@
 
 {#snippet desktopMenu()}
 	<nav class="link-list hide-on-mobile">
+		<TabLink title={$t("pages.user.active_emotes")} href="/users/{data.id}" big>
+			<Lightning />
+			{#snippet active()}
+				<Lightning weight="fill" />
+			{/snippet}
+		</TabLink>
+		<TabLink title={$t("pages.user.uploaded_emotes")} href="/users/{data.id}/uploaded" big>
+			<Upload />
+			{#snippet active()}
+				<Upload weight="fill" />
+			{/snippet}
+		</TabLink>
+		<TabLink
+			title={$t("common.emote_sets", { values: { count: 2 } })}
+			href="/users/{data.id}/emote-sets"
+			big
+		>
+			<FolderSimple />
+			{#snippet active()}
+				<FolderSimple weight="fill" />
+			{/snippet}
+		</TabLink>
+		<TabLink title={$t("common.activity")} href="/users/{data.id}/activity" big>
+			<Pulse />
+			{#snippet active()}
+				<Pulse weight="fill" />
+			{/snippet}
+		</TabLink>
+		<hr />
+		<TabLink title={$t("common.cosmetics")} href="/users/{data.id}/cosmetics" big>
+			<PaintBrush />
+			{#snippet active()}
+				<PaintBrush weight="fill" />
+			{/snippet}
+		</TabLink>
 		{#await data.streamed.userRequest.value}
-			<Button big onclick={() => (connectionsExpanded = !connectionsExpanded)}>
-				{#snippet icon()}
-					<Link />
-				{/snippet}
-				{$t("common.connections")}
-				{#snippet iconRight()}
-					{#if connectionsExpanded}
-						<CaretDown style="margin-left: auto" />
-					{:else}
-						<CaretRight style="margin-left: auto" />
-					{/if}
-				{/snippet}
-			</Button>
 			<Button big onclick={() => (editorsExpanded = !editorsExpanded)}>
 				{#snippet icon()}
 					<UserCircle />
@@ -105,8 +127,6 @@
 					{/if}
 				{/snippet}
 			</Button>
-			<hr />
-		{:then user}
 			<Button big onclick={() => (connectionsExpanded = !connectionsExpanded)}>
 				{#snippet icon()}
 					<Link />
@@ -120,19 +140,7 @@
 					{/if}
 				{/snippet}
 			</Button>
-			{#if connectionsExpanded}
-				<div class="expanded">
-					<Connections {user} />
-					{#if isMe}
-						<Button href="/settings/account">
-							{#snippet icon()}
-								<Gear />
-							{/snippet}
-							Manage connections
-						</Button>
-					{/if}
-				</div>
-			{/if}
+		{:then user}
 			<Button big onclick={() => (editorsExpanded = !editorsExpanded)}>
 				{#snippet icon()}
 					<UserCircle />
@@ -165,43 +173,33 @@
 					{/await}
 				</div>
 			{/if}
-			<hr />
+			<Button big onclick={() => (connectionsExpanded = !connectionsExpanded)}>
+				{#snippet icon()}
+					<Link />
+				{/snippet}
+				{$t("common.connections")}
+				{#snippet iconRight()}
+					{#if connectionsExpanded}
+						<CaretDown style="margin-left: auto" />
+					{:else}
+						<CaretRight style="margin-left: auto" />
+					{/if}
+				{/snippet}
+			</Button>
+			{#if connectionsExpanded}
+				<div class="expanded">
+					<Connections {user} />
+					{#if isMe}
+						<Button href="/settings/account">
+							{#snippet icon()}
+								<Gear />
+							{/snippet}
+							Manage connections
+						</Button>
+					{/if}
+				</div>
+			{/if}
 		{/await}
-		<TabLink title={$t("pages.user.active_emotes")} href="/users/{data.id}" big>
-			<Lightning />
-			{#snippet active()}
-				<Lightning weight="fill" />
-			{/snippet}
-		</TabLink>
-		<TabLink title={$t("pages.user.uploaded_emotes")} href="/users/{data.id}/uploaded" big>
-			<Upload />
-			{#snippet active()}
-				<Upload weight="fill" />
-			{/snippet}
-		</TabLink>
-		<TabLink
-			title={$t("common.emote_sets", { values: { count: 2 } })}
-			href="/users/{data.id}/emote-sets"
-			big
-		>
-			<FolderSimple />
-			{#snippet active()}
-				<FolderSimple weight="fill" />
-			{/snippet}
-		</TabLink>
-		<hr />
-		<TabLink title={$t("common.cosmetics")} href="/users/{data.id}/cosmetics" big>
-			<PaintBrush />
-			{#snippet active()}
-				<PaintBrush weight="fill" />
-			{/snippet}
-		</TabLink>
-		<TabLink title={$t("common.activity")} href="/users/{data.id}/activity" big>
-			<Pulse />
-			{#snippet active()}
-				<Pulse weight="fill" />
-			{/snippet}
-		</TabLink>
 	</nav>
 {/snippet}
 
