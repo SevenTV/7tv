@@ -262,11 +262,14 @@
 
 		background-color: var(--bg-light);
 
+		max-height: 50vh;
+
 		border: 1px solid var(--border-active);
 		border-radius: 0.5rem;
 
 		display: none;
-		overflow: hidden;
+		overflow-x: hidden;
+		overflow-y: auto;
 
 		flex-direction: column;
 
