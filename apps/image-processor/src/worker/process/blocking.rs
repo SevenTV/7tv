@@ -323,6 +323,9 @@ impl<'a> BlockingTask<'a> {
 		let idx = self.frame_idx;
 		self.frame_idx += 1;
 
+		// Convert from the decode timescale into ms.
+		frame.duration_ts = (frame.duration_ts as f64 * 1000.0 / self.decoder_info.timescale as f64).round() as u64;
+
 		let variants = if idx == self.static_frame_idx {
 			let variants = self.resizer.resize(frame)?;
 
@@ -337,9 +340,6 @@ impl<'a> BlockingTask<'a> {
 		} else {
 			None
 		};
-
-		// Convert from the decode timescale into ms.
-		frame.duration_ts = (frame.duration_ts as f64 * 1000.0 / self.decoder_info.timescale as f64).round() as u64;
 
 		if let Some(config) = self.frame_configs.get(idx).ok_or(JobError::Internal(""))? {
 			match config {
