@@ -289,8 +289,9 @@
 	</p>
 	<h2>Reporting copyright infringement</h2>
 	<p>
-		If you would like to notify us of the infringing material or activity, you may send an email to
-		kathy@7tv.app.
+		If you would like to notify us of the infringing material or activity, you may send an email to <a
+			href="mailto:kathy@7tv.app">kathy@7tv.app</a
+		>.
 	</p>
 </div>
 

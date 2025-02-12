@@ -367,7 +367,7 @@
 	<h1>Contact Us</h1>
 	<p>If you have any questions about this Privacy Policy, you can contact us:</p>
 	<ul>
-		<li>By email: kathy@7tv.app</li>
+		<li>By email: <a href="mailto:kathy@7tv.app"> kathy@7tv.app</a></li>
 	</ul>
 </div>
 

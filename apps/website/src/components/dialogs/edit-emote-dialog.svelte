@@ -103,6 +103,24 @@
 		deleteDialogMode = "shown";
 		mode = "hidden";
 	}
+
+	function onModeChange(mode: string) {
+		if (mode === "hidden") {
+			name = data.defaultName;
+			tags = data.tags;
+
+			zeroWidth = data.flags.defaultZeroWidth;
+			publicListed = data.flags.publicListed;
+			approvedPersonal = data.flags.approvedPersonal;
+			deniedPersonal = data.flags.deniedPersonal;
+			privateFlag = data.flags.private;
+			nsfw = data.flags.nsfw;
+		}
+	}
+
+	$effect(() => {
+		onModeChange(mode);
+	});
 </script>
 
 <DeleteEmoteDialog bind:mode={deleteDialogMode} {data} />

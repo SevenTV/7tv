@@ -11,7 +11,7 @@
 
 	let { paints }: { paints: Paint[] } = $props();
 
-	let renewMoment = moment().add(1, "month").startOf("month");
+	let renewMoment = moment().utc().add(1, "month").startOf("month");
 </script>
 
 <StoreSection title={$t("pages.store.subscription.monthly_paints")}>
