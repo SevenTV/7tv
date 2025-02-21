@@ -73,6 +73,7 @@
 		"search_users": "{count, plural, one {Search a user} other {Search users}}",
 		"tags": "Tags",
 		"enter_tags": "Enter tags",
+		"tag_limit_reached": "Tag limit of {limit} reached",
 		"filters": "Filters",
 		"no_filters": "No Filters",
 		"emote_name": "Emote Name",
@@ -353,7 +354,7 @@
 				}
 			},
 			"editors": {
-				"details": "Manage and customize your editors or channels your edit for",
+				"details": "Manage and customize your editors or channels you edit for",
 				"editing_for": "Editing For",
 				"add_editor": "Add Editor"
 			},

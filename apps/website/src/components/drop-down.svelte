@@ -12,20 +12,43 @@
 		dropdown?: Snippet<[() => void]>;
 		align?: "left" | "right";
 		children?: Snippet;
+		hover?: boolean;
 	} & HTMLAttributes<HTMLDivElement>;
 
-	let { dropdown, align = "right", children, ...restProps }: Props = $props();
+	let { dropdown, align = "right", children, hover, ...restProps }: Props = $props();
+
+	const CLOSE_DELAY = 400; // ms
 
 	let hideOnMobile = $state(false);
 	let hideOnDesktop = $state(false);
 
 	let index = dropDownIndex++;
+	let hoverTimout: NodeJS.Timeout | undefined;
 
 	let expanded = $state(false);
 
 	function toggle(e: MouseEvent) {
 		e.preventDefault();
 		expanded = !expanded;
+	}
+
+	function handleMouseLeave() {
+		if (!hover) {
+			return;
+		}
+		hoverTimout = setTimeout(() => {
+			expanded = false;
+		}, CLOSE_DELAY);
+	}
+
+	function handleMouseEnter() {
+		if (!hover) {
+			return;
+		}
+		if (hoverTimout) {
+			clearTimeout(hoverTimout);
+		}
+		expanded = true;
 	}
 
 	export function close() {
@@ -36,8 +59,11 @@
 <div
 	class="dropdown"
 	use:mouseTrap={close}
+	onmouseenter={handleMouseEnter}
+	onmouseleave={handleMouseLeave}
 	class:hide-on-mobile={hideOnMobile}
 	class:hide-on-desktop={hideOnDesktop}
+	role="none"
 >
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<!-- This is just a wrapper element to catch the underlying click event -->

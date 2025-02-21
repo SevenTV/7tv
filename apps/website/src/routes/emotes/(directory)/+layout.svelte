@@ -48,6 +48,12 @@
 	$effect(() => {
 		let url = new URL($page.url);
 
+		// Needed for update when on the same page
+		if ($page.url.searchParams.get("updateSearch") === "true") {
+			query = $page.url.searchParams.get("q") ?? undefined;
+			url.searchParams.delete("updateSearch");
+		}
+
 		if (query) {
 			url.searchParams.set("q", query);
 		} else {

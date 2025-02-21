@@ -90,14 +90,14 @@
 
 		{#if $user !== undefined}
 			<HideOn mobile>
-				<DropDown>
+				<DropDown hover={true}>
 					{#if $user}
-						<button class="profile">
+						<Button class="profile">
 							<UserProfilePicture user={$user} size={32} />
 							<span class="profile-name">
 								<UserName user={$user} />
 							</span>
-						</button>
+						</Button>
 					{:else}
 						<Button>
 							{#snippet icon()}

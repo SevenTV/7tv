@@ -6,6 +6,9 @@
 	import type { Snippet } from "svelte";
 
 	const LIMIT = 6;
+	const MIN_TAG_SIZE = 3;
+	const MAX_TAG_SIZE = 30;
+	const SEPARATORS = ["Enter", " ", ","];
 
 	interface Props {
 		tags?: string[];
@@ -22,22 +25,40 @@
 	let tagInput: string | undefined = $state();
 
 	function onTagInput(e: KeyboardEvent) {
-		if (
-			e.key === "Enter" &&
-			tagInput &&
-			tagInput.length >= 3 &&
-			tagInput.length <= 30 &&
-			tags.length < LIMIT &&
-			!tags.includes(tagInput)
-		) {
-			tags = [...tags, tagInput];
-			tagInput = "";
+		// Prevents the user from accidentally creating the emote when having the tags input selected
+		// Also prevents them from typing a separator
+		if (SEPARATORS.includes(e.key)) {
 			e.preventDefault();
+		}
+
+		if (tagInput === undefined) {
+			return;
+		}
+
+		// Removes spaces and commas in case they paste separators (Maybe remove all invalid characters)
+		const sanitizedTagInput = tagInput.replace(/[\s,]+/g, "");
+
+		if (
+			SEPARATORS.includes(e.key) &&
+			sanitizedTagInput.length >= MIN_TAG_SIZE &&
+			sanitizedTagInput.length <= MAX_TAG_SIZE &&
+			tags.length < LIMIT &&
+			!tags.includes(sanitizedTagInput)
+		) {
+			tags = [sanitizedTagInput, ...tags];
+			tagInput = "";
 		}
 	}
 </script>
 
-<TextInput placeholder={$t("labels.enter_tags")} bind:value={tagInput} onkeypress={onTagInput}>
+<TextInput
+	disabled={tags.length >= LIMIT}
+	placeholder={tags.length < LIMIT
+		? $t("labels.enter_tags")
+		: $t("labels.tag_limit_reached", { values: { limit: LIMIT } })}
+	bind:value={tagInput}
+	onkeypress={onTagInput}
+>
 	{@render children?.()}
 	{#snippet icon()}
 		<Tag />

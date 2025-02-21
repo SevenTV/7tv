@@ -23,6 +23,7 @@
 	let imageSrc = $state<string>();
 	let zeroWidth = $state(false);
 	let privateFlag = $state(false);
+	let acceptTerms = $state(false);
 
 	let loading = $state(false);
 
@@ -149,8 +150,6 @@
 	// 	}
 	// }
 
-	let acceptTerms = $state(false);
-
 	async function submit() {
 		if (!files || !files[0]) return;
 
@@ -166,23 +165,55 @@
 		}
 	}
 
-	function reset() {
+	function resetFile() {
 		files = undefined;
 		loading = false;
 	}
+
+	function onModeChange(mode: string) {
+		if (mode === "hidden") {
+			resetFile();
+			name = "";
+			tags = [];
+			zeroWidth = false;
+			privateFlag = false;
+			acceptTerms = false;
+		}
+	}
+
+	$effect(() => {
+		onModeChange(mode);
+	});
+
+	const fileType = $derived.by(() => {
+		if (files) {
+			const type = files[0].type;
+			if (type.startsWith("image/")) {
+				return "image";
+			} else if (type.startsWith("video/")) {
+				return "video";
+			} else {
+				return "";
+			}
+		}
+	});
 </script>
 
 <Dialog width={60} bind:mode>
 	<form class="grid">
 		<h1 class="heading">{$t("dialogs.upload.title")}</h1>
 		<section class="upload {previewTheme}" class:preview={files && files[0]}>
-			{#if files && files[0] && imageSrc}
+			{#if files && files[0] && fileType != "" && imageSrc}
 				<span class="name">{name}</span>
 				<Tags {tags} />
 				<div class="previews">
 					{#each [32, 64, 96, 128] as resolution}
 						<div class="preview">
-							<img src={imageSrc} width={resolution} alt="Upload Preview" />
+							{#if fileType === "image"}
+								<img src={imageSrc} width={resolution} alt="Emote Preview" />
+							{:else if fileType === "video"}
+								<video src={imageSrc} width={resolution} autoplay loop muted></video>
+							{/if}
 							<span class="size-text">{resolution}x{resolution}</span>
 						</div>
 					{/each}
@@ -197,7 +228,7 @@
 							{/if}
 						{/snippet}
 					</Button>
-					<Button secondary onclick={reset}>
+					<Button secondary onclick={resetFile}>
 						{#snippet icon()}
 							<Trash />
 						{/snippet}
